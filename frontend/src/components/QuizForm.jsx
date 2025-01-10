@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import AuthContext from '../AuthContext';
 
 const QuizForm = () => {
+  const { token, userId } = useContext(AuthContext); // Retrieve token and userId from AuthContext
   const [answers, setAnswers] = useState([]);
   const [message, setMessage] = useState('');
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODEwMWNkYTVmNzY4MzQ2ZDcxMTk1OSIsImlhdCI6MTczNjUxNzgwNSwiZXhwIjoxNzM2NjA0MjA1fQ.HXwwLPd9opxUTVmWIYnfPXGBD-yY6URVezYVmDf2Q5g'; // Replace with dynamic token from your auth logic
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!userId) {
+      setMessage('User not logged in. Please log in first.');
+      return;
+    }
+
     try {
+      const result = "Some Result"; // Placeholder for result logic, replace with dynamic calculation if needed
       await axios.post(
         'http://localhost:5000/api/quiz',
         {
-          userId: 'USER_ID_FROM_BACKEND', // Replace with actual user ID
+          userId, // Use dynamic userId
           answers,
+          result, // Include result
         },
         {
           headers: {
@@ -25,7 +33,7 @@ const QuizForm = () => {
 
       setMessage('Quiz submitted successfully!');
     } catch (error) {
-      setMessage('Error submitting quiz: ' + error.response.data.error);
+      setMessage('Error submitting quiz: ' + (error.response?.data?.error || error.message));
     }
   };
 
