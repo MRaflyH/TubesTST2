@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
+import SignUp from './components/SignUp';
 import QuizForm from './components/QuizForm';
 import Results from './components/Results';
 import AuthContext from './AuthContext';
@@ -22,6 +23,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} /> {/* Login page */}
+        <Route path="/signup" element={<SignUp />} /> {/* Add Sign-Up Route */}
         <Route
           path="/quiz"
           element={
