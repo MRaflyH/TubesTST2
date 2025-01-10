@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const User = require('./User');
+const User = require('../models/User');
 
 // Register
 router.post('/register', async (req, res) => {
@@ -32,4 +32,3 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
-

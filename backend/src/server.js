@@ -11,16 +11,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Route Imports
+const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+const quizRoutes = require('./routes/quizRoutes');
+
+// Use Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/quiz', quizRoutes);
+
 // MongoDB Connection
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
-
-// Routes
-app.get('/', (req, res) => {
-  res.send('Welcome to Bespok Gift API');
-});
 
 // Server Start
 const PORT = process.env.PORT || 5000;
