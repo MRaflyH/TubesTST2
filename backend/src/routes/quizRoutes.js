@@ -19,15 +19,17 @@ router.post('/', async (req, res) => {
 // Fetch Quiz Results
 router.get('/results', authenticate, async (req, res) => {
   try {
-    const userId = req.user.id; // Use req.user.id from the decoded token
+    const userId = req.user.id;
     const latestQuiz = await Quiz.findOne({ user: userId }).sort({ createdAt: -1 });
 
     if (!latestQuiz) {
       return res.status(404).json({ error: 'No quiz results found.' });
     }
 
-    // Fetch products matching the quiz answers
-    const recommendations = await Product.find({ tags: { $in: latestQuiz.answers } });
+    // Fetch products with a dynamic ranking
+    const recommendations = await Product.find({ tags: { $in: latestQuiz.answers } })
+      .sort({ popularity: -1 }) // Sort by popularity descending
+      .limit(10); // Limit recommendations
 
     res.json({
       quizAnswers: latestQuiz.answers,

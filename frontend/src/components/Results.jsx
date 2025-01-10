@@ -39,7 +39,11 @@ const Results = () => {
       <h2>Recommended Gifts:</h2>
       <ul>
         {results.recommendations.map((product) => (
-          <li key={product.name}>{product.name}</li>
+          <li key={product.name}>
+            <h3>{product.name}</h3>
+            {product.image && <img src={product.image} alt={product.name} style={{ width: '100px' }} />}
+            <p>{product.description}</p>
+          </li>
         ))}
       </ul>
     </div>
