@@ -15,11 +15,12 @@ app.use(cors());
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const quizRoutes = require('./routes/quizRoutes');
+const authenticate = require('./middleware/auth'); // Import authentication middleware
 
 // Use Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/quiz', quizRoutes);
+app.use('/api/quiz', authenticate, quizRoutes); // Secure quiz routes
 
 // MongoDB Connection
 mongoose
