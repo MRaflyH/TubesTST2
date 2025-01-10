@@ -3,40 +3,45 @@ import axios from 'axios';
 import AuthContext from '../AuthContext';
 
 const Results = () => {
-  const { token } = useContext(AuthContext); // Get token from AuthContext
-  const [result, setResult] = useState(null);
+  const { token } = useContext(AuthContext);
+  const [results, setResults] = useState(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchResult = async () => {
+    const fetchResults = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/quiz/results', {
           headers: {
-            Authorization: `Bearer ${token}`, // Ensure token is passed correctly
+            Authorization: `Bearer ${token}`,
           },
         });
-        setResult(response.data);
+        setResults(response.data);
       } catch (err) {
         setError(err.response?.data?.error || 'Failed to fetch results. Please try again.');
       }
     };
 
-    fetchResult();
+    fetchResults();
   }, [token]);
 
   if (error) {
     return <div>Error fetching results: {error}</div>;
   }
 
-  if (!result) {
+  if (!results) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <h1>Your Quiz Result</h1>
-      <p>Answers: {result.answers.join(', ')}</p>
-      <p>Result: {result.result}</p>
+      <p>Answers: {results.quizAnswers.join(', ')}</p>
+      <h2>Recommended Gifts:</h2>
+      <ul>
+        {results.recommendations.map((product) => (
+          <li key={product.name}>{product.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };

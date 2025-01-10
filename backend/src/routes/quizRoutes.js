@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Quiz = require('../models/Quiz');
-const authenticate = require('../middleware/auth'); // Import authentication middleware
+const Product = require('../models/Product'); // Assuming a Product model is created
+const authenticate = require('../middleware/auth');
 
 // Submit Quiz
 router.post('/', async (req, res) => {
@@ -19,12 +20,19 @@ router.post('/', async (req, res) => {
 router.get('/results', authenticate, async (req, res) => {
   try {
     const userId = req.user.id; // Use req.user.id from the decoded token
-    // Fetch the most recent quiz result for the user
     const latestQuiz = await Quiz.findOne({ user: userId }).sort({ createdAt: -1 });
+
     if (!latestQuiz) {
       return res.status(404).json({ error: 'No quiz results found.' });
     }
-    res.json(latestQuiz);
+
+    // Fetch products matching the quiz answers
+    const recommendations = await Product.find({ tags: { $in: latestQuiz.answers } });
+
+    res.json({
+      quizAnswers: latestQuiz.answers,
+      recommendations,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

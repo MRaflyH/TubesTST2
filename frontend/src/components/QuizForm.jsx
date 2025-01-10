@@ -1,31 +1,34 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
 const QuizForm = () => {
-  const { token, userId } = useContext(AuthContext); // Use token and userId from AuthContext
+  const { token, userId } = useContext(AuthContext);
   const [answers, setAnswers] = useState([]);
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+
+  const questions = [
+    { id: 1, question: 'What is your favorite color?', options: ['Red', 'Blue', 'Green', 'Yellow'] },
+    { id: 2, question: 'What type of gift do you prefer?', options: ['Electronics', 'Books', 'Clothing', 'Accessories'] },
+    { id: 3, question: 'What is your favorite season?', options: ['Spring', 'Summer', 'Fall', 'Winter'] },
+  ];
+
+  const handleOptionChange = (questionId, selectedOption) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[questionId - 1] = selectedOption;
+    setAnswers(updatedAnswers);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!userId) {
-      setMessage('User not logged in. Please log in first.');
-      return;
-    }
-
     try {
-      const result = "Some Result"; // Placeholder for result logic
+      const result = "Recommendations based on your answers"; // Placeholder result
       await axios.post(
         'http://localhost:5000/api/quiz',
-        {
-          userId, // Use dynamic userId
-          answers,
-          result,
-        },
+        { userId, answers, result },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,30 +37,31 @@ const QuizForm = () => {
       );
 
       setMessage('Quiz submitted successfully!');
-      navigate('/results'); // Redirect to Results page
+      navigate('/results');
     } catch (error) {
       setMessage('Error submitting quiz: ' + (error.response?.data?.error || error.message));
     }
   };
 
-  const handleAnswerChange = (index, value) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[index] = value;
-    setAnswers(updatedAnswers);
-  };
-
   return (
     <form onSubmit={handleSubmit}>
       <h1>Take the Quiz</h1>
-      <label>Question 1:</label>
-      <input type="text" onChange={(e) => handleAnswerChange(0, e.target.value)} />
-      <br />
-      <label>Question 2:</label>
-      <input type="text" onChange={(e) => handleAnswerChange(1, e.target.value)} />
-      <br />
-      <label>Question 3:</label>
-      <input type="text" onChange={(e) => handleAnswerChange(2, e.target.value)} />
-      <br />
+      {questions.map((q) => (
+        <div key={q.id}>
+          <h3>{q.question}</h3>
+          {q.options.map((option) => (
+            <label key={option}>
+              <input
+                type="radio"
+                name={`question-${q.id}`}
+                value={option}
+                onChange={() => handleOptionChange(q.id, option)}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+      ))}
       <button type="submit">Submit Quiz</button>
       {message && <p>{message}</p>}
     </form>
