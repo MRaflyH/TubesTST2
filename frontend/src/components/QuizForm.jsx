@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
 const QuizForm = () => {
-  const { token, userId } = useContext(AuthContext); // Retrieve token and userId from AuthContext
+  const { token, userId } = useContext(AuthContext); // Use token and userId from AuthContext
   const [answers, setAnswers] = useState([]);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,13 +18,13 @@ const QuizForm = () => {
     }
 
     try {
-      const result = "Some Result"; // Placeholder for result logic, replace with dynamic calculation if needed
+      const result = "Some Result"; // Placeholder for result logic
       await axios.post(
         'http://localhost:5000/api/quiz',
         {
           userId, // Use dynamic userId
           answers,
-          result, // Include result
+          result,
         },
         {
           headers: {
@@ -32,6 +34,7 @@ const QuizForm = () => {
       );
 
       setMessage('Quiz submitted successfully!');
+      navigate('/results'); // Redirect to Results page
     } catch (error) {
       setMessage('Error submitting quiz: ' + (error.response?.data?.error || error.message));
     }

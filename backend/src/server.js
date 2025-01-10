@@ -20,7 +20,10 @@ const authenticate = require('./middleware/auth'); // Authentication middleware
 // Use Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/quiz', authenticate, quizRoutes); // Secure quiz routes
+app.use('/api/quiz', quizRoutes); // Use quiz routes without global auth
+
+// Apply auth middleware for secure routes
+app.use('/api/quiz/results', authenticate); // Secure fetching results
 
 // MongoDB Connection
 mongoose
