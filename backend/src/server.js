@@ -15,7 +15,7 @@ app.use(cors());
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const quizRoutes = require('./routes/quizRoutes');
-const authenticate = require('./middleware/auth'); // Import authentication middleware
+const authenticate = require('./middleware/auth'); // Authentication middleware
 
 // Use Routes
 app.use('/api/auth', authRoutes);
@@ -27,6 +27,16 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+// Error Handling Middleware
+const errorHandler = (err, req, res, next) => {
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error',
+  });
+};
+
+// Use the Error Handling Middleware
+app.use(errorHandler);
 
 // Server Start
 const PORT = process.env.PORT || 5000;
