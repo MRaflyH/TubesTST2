@@ -81,7 +81,7 @@ const DocsPage = () => {
 
       <h2>Deployment</h2>
       <ul>
-        <li><strong>Backend:</strong> Deployed on a Node.js server.</li>
+        <li><strong>Backend:</strong> Deployed using Railway.</li>
         <li><strong>Frontend:</strong> Deployed using Vercel.</li>
       </ul>
 
