@@ -25,16 +25,17 @@ const Header = () => {
 
   return (
     <nav>
+      <button onClick={() => window.location.href = '/dashboard'}>Dashboard</button>
+      <button onClick={() => window.location.href = '/docs'}>Docs</button>
       {token ? (
         <>
           <button onClick={logout}>Logout</button>
-          <button onClick={() => window.location.href = '/dashboard'}>Dashboard</button>
           <button onClick={() => window.location.href = '/quiz'}>Quiz</button>
           <button onClick={() => window.location.href = '/results'}>Results</button>
         </>
       ) : (
         <>
-          <button onClick={() => window.location.href = '/'}>Login</button>
+          <button onClick={() => window.location.href = '/login'}>Login</button>
           <button onClick={() => window.location.href = '/signup'}>Sign Up</button>
         </>
       )}
@@ -47,16 +48,10 @@ const App = () => {
     <Router>
       <Header /> {/* Add Header for navigation */}
       <Routes>
-        <Route path="/" element={<Login />} /> {/* Login page */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} /> {/* Redirect to Dashboard */}
         <Route path="/signup" element={<SignUp />} /> {/* Sign-Up page */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        /> {/* Protected Dashboard page */}
+        <Route path="/login" element={<Login />} /> {/* Sign-Up page */}
+        <Route path="/dashboard" element={<Dashboard />} /> {/* Dashboard */}
         <Route
           path="/quiz"
           element={
