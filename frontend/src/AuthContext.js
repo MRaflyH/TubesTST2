@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     setUserId(newUserId); // Update userId state
     console.log('Token:', newToken); // Log token
     console.log('UserId:', newUserId); // Log userId
-    };
+  };
 
   const logout = () => {
     localStorage.removeItem('authToken'); // Remove token
