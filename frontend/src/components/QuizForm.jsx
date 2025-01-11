@@ -9,15 +9,18 @@ const QuizForm = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  // Questions with full descriptions
   const questions = [
-    { id: 1, question: 'What is your favorite color?', options: ['Red', 'Blue', 'Green', 'Yellow'] },
-    { id: 2, question: 'What type of gift do you prefer?', options: ['Electronics', 'Books', 'Clothing', 'Accessories'] },
-    { id: 3, question: 'What is your favorite season?', options: ['Spring', 'Summer', 'Fall', 'Winter'] },
+    { id: 1, question: 'What type of gift are you looking for?', options: ['Practical and useful', 'Luxurious and unique', 'Relaxing and sentimental', 'Tech-savvy and innovative'] },
+    { id: 2, question: 'Who is the gift for?', options: ['A man', 'A woman', 'Unisex', 'A child'] },
+    { id: 3, question: 'What is the occasion?', options: ['Birthday', 'Anniversary', 'Thank you', 'No special occasion'] },
+    { id: 4, question: 'What price range are you considering?', options: ['Below $20', '$20-$50', '$50-$100', '$100 and above'] },
+    { id: 5, question: 'What is the recipient’s personality?', options: ['Active and sporty', 'Artistic and creative', 'Relaxed and laid back', 'Organized and professional'] },
   ];
 
   const handleOptionChange = (questionId, selectedOption) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[questionId - 1] = selectedOption;
+    updatedAnswers[questionId - 1] = ['A', 'B', 'C', 'D'][questions[questionId - 1].options.indexOf(selectedOption)];
     setAnswers(updatedAnswers);
   };
 
@@ -25,10 +28,9 @@ const QuizForm = () => {
     e.preventDefault();
 
     try {
-      const result = "Recommendations based on your answers"; // Placeholder result
       await axios.post(
-        'http://localhost:5000/api/quiz',
-        { userId, answers, result },
+        'http://localhost:5000/api/quiz/submit',
+        { userId, answers },
         {
           headers: {
             Authorization: `Bearer ${token}`,

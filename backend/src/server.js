@@ -15,21 +15,17 @@ app.use(cors());
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const quizRoutes = require('./routes/quizRoutes');
-const authenticate = require('./middleware/auth'); // Authentication middleware
 
 // Use Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/quiz', quizRoutes); // Use quiz routes without global auth
-
-// Apply auth middleware for secure routes
-app.use('/api/quiz/results', authenticate); // Secure fetching results
+app.use('/api/quiz', quizRoutes); // All quiz-related routes
 
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 // Error Handling Middleware
 const errorHandler = (err, req, res, next) => {
@@ -37,6 +33,11 @@ const errorHandler = (err, req, res, next) => {
     error: err.message || 'Internal Server Error',
   });
 };
+
+app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.path}`);
+  next();
+});
 
 // Use the Error Handling Middleware
 app.use(errorHandler);
