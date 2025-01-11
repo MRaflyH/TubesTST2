@@ -1,0 +1,67 @@
+[
+    {
+      "id": 1,
+      "name": "Leather Wallet",
+      "category": "Accessories",
+      "price": 49.99,
+      "description": "A high-quality leather wallet with multiple card slots.",
+      "tags": ["practical", "men", "classic"]
+    },
+    {
+      "id": 2,
+      "name": "Scented Candle Set",
+      "category": "Home Decor",
+      "price": 25.50,
+      "description": "A set of 3 scented candles for a calming ambiance.",
+      "tags": ["relaxation", "aromatherapy", "unisex"]
+    },
+    {
+      "id": 3,
+      "name": "Bluetooth Speaker",
+      "category": "Electronics",
+      "price": 89.99,
+      "description": "A portable Bluetooth speaker with excellent sound quality.",
+      "tags": ["music", "portable", "tech"]
+    },
+    {
+      "id": 4,
+      "name": "Fitness Tracker",
+      "category": "Fitness",
+      "price": 120.00,
+      "description": "A wearable fitness tracker for monitoring health and activity.",
+      "tags": ["active", "tech", "health"]
+    },
+    {
+      "id": 5,
+      "name": "Gourmet Chocolate Box",
+      "category": "Food & Beverages",
+      "price": 29.99,
+      "description": "An assortment of gourmet chocolates in a beautifully packaged box.",
+      "tags": ["luxury", "sweet", "unisex"]
+    },
+    {
+      "id": 6,
+      "name": "Personalized Mug",
+      "category": "Custom Gifts",
+      "price": 12.99,
+      "description": "A mug personalized with your choice of text or images.",
+      "tags": ["customizable", "practical", "unisex"]
+    },
+    {
+      "id": 7,
+      "name": "Handcrafted Jewelry",
+      "category": "Accessories",
+      "price": 60.00,
+      "description": "Unique handcrafted jewelry for special occasions.",
+      "tags": ["luxury", "women", "handmade"]
+    },
+    {
+      "id": 8,
+      "name": "Desk Organizer Set",
+      "category": "Office Supplies",
+      "price": 35.00,
+      "description": "A stylish desk organizer to declutter your workspace.",
+      "tags": ["organization", "practical", "unisex"]
+    }
+  ]
+  

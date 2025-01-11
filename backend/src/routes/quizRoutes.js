@@ -1,43 +1,59 @@
-const express = require('express');
-const router = express.Router();
-const Quiz = require('../models/Quiz');
-const Product = require('../models/Product'); // Assuming a Product model is created
-const authenticate = require('../middleware/auth');
+const express = require('express'); // Add this import
+const mongoose = require('mongoose');
+const router = express.Router(); // Initialize router
+const Product = require('../models/Product'); // Import Product model
+const User = require('../models/User'); // Import User model
 
-// Submit Quiz
-router.post('/', async (req, res) => {
-  const { userId, answers, result } = req.body;
-  try {
-    const quiz = new Quiz({ user: userId, answers, result });
-    await quiz.save();
-    res.status(201).json({ message: 'Quiz submitted successfully!' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+router.post('/submit', async (req, res) => {
+  const { userId, answers } = req.body;
+
+  // Validate userId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: "Invalid userId format" });
   }
-});
 
-// Fetch Quiz Results
-router.get('/results', authenticate, async (req, res) => {
+  const userExists = await User.findById(userId);
+  if (!userExists) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  // Validate answers
+  if (!answers || !Array.isArray(answers)) {
+    return res.status(400).json({ error: "Invalid answers format" });
+  }
+
+  // Map quiz answers to tags dynamically
+  const questionToTags = [
+    { A: "practical", B: "luxury", C: "relaxation", D: "tech" }, // Question 1
+    { A: "men", B: "women", C: "unisex", D: "children" }, // Question 2
+    { A: "birthday", B: "anniversary", C: "thank_you", D: "casual" }, // Question 3
+    { A: "price < 20", B: "price >= 20 && price <= 50", C: "price >= 50 && price <= 100", D: "price > 100" }, // Question 4
+    { A: "active", B: "artistic", C: "relaxation", D: "organization" } // Question 5
+  ];
+
   try {
-    const userId = req.user.id;
-    const latestQuiz = await Quiz.findOne({ user: userId }).sort({ createdAt: -1 });
+    // Generate tags based on answers
+    const selectedTags = answers.map((answer, index) => questionToTags[index]?.[answer]).filter(Boolean);
 
-    if (!latestQuiz) {
-      return res.status(404).json({ error: 'No quiz results found.' });
+    if (selectedTags.length === 0) {
+      return res.status(400).json({ error: "No valid tags generated from answers" });
     }
 
-    // Fetch products with a dynamic ranking
-    const recommendations = await Product.find({ tags: { $in: latestQuiz.answers } })
-      .sort({ popularity: -1 }) // Sort by popularity descending
-      .limit(10); // Limit recommendations
+    // Fetch products matching the selected tags
+    const recommendations = await Product.find({
+      tags: { $in: selectedTags },
+    })
+      .sort({ popularity: -1 })
+      .limit(10);
 
-    res.json({
-      quizAnswers: latestQuiz.answers,
-      recommendations,
-    });
+    if (recommendations.length === 0) {
+      return res.json({ message: "No recommendations found. Try different preferences." });
+    }
+
+    res.json({ recommendations });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Failed to process quiz results." });
   }
 });
 
-module.exports = router;
+module.exports = router; // Export router
