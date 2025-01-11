@@ -4,6 +4,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import QuizForm from './components/QuizForm';
 import Results from './components/Results';
+import DocsPage from './components/DocsPage'; // Import DocsPage
 import AuthContext from './AuthContext';
 
 // ProtectedRoute Component
@@ -23,7 +24,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} /> {/* Login page */}
-        <Route path="/signup" element={<SignUp />} /> {/* Add Sign-Up Route */}
+        <Route path="/signup" element={<SignUp />} /> {/* Sign-Up page */}
         <Route
           path="/quiz"
           element={
@@ -40,6 +41,7 @@ const App = () => {
             </ProtectedRoute>
           }
         /> {/* Protected Results page */}
+        <Route path="/docs" element={<DocsPage />} /> {/* Documentation page */}
       </Routes>
     </Router>
   );
