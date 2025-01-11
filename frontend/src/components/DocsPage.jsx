@@ -9,6 +9,46 @@ const DocsPage = () => {
       <h2>Overview</h2>
       <p>TubesTST2 is a web application that integrates a backend API and a React-based frontend to provide a quiz-based platform. This documentation outlines the backend API endpoints, middleware, and frontend components.</p>
 
+      <h2>Technologies Used</h2>
+
+      <h3>Backend</h3>
+      <ul>
+        <li><strong>Framework:</strong> <a href="https://expressjs.com/">Express.js</a> - A minimalist web framework for Node.js.</li>
+        <li><strong>Database:</strong> <a href="https://www.mongodb.com/">MongoDB</a> - A NoSQL database, used via the Mongoose ODM (Object Data Modeling).</li>
+        <li><strong>Authentication:</strong>
+          <ul>
+            <li><a href="https://www.npmjs.com/package/jsonwebtoken">jsonwebtoken</a> for token-based authentication.</li>
+            <li><a href="https://www.npmjs.com/package/bcryptjs">bcryptjs</a> for password hashing.</li>
+          </ul>
+        </li>
+        <li><strong>Environment Management:</strong> <a href="https://www.npmjs.com/package/dotenv">dotenv</a> for managing environment variables.</li>
+        <li><strong>Development Tools:</strong>
+          <ul>
+            <li><a href="https://nodemon.io/">nodemon</a> for auto-restarting the server during development.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Frontend</h3>
+      <ul>
+        <li><strong>Framework:</strong> <a href="https://reactjs.org/">React.js</a> - A JavaScript library for building user interfaces.</li>
+        <li><strong>Routing:</strong> <a href="https://reactrouter.com/">React Router</a> - For managing navigation and routing within the application.</li>
+        <li><strong>HTTP Client:</strong> <a href="https://axios-http.com/">Axios</a> - For making API requests.</li>
+        <li><strong>Password Hashing:</strong> <a href="https://www.npmjs.com/package/bcryptjs">bcryptjs</a> for secure password handling.</li>
+        <li><strong>Development Tools:</strong>
+          <ul>
+            <li>`react-scripts` - Included for build, start, and testing setups.</li>
+            <li>ESLint - Configured for React-specific linting.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Deployment</h3>
+      <ul>
+        <li><strong>Frontend Hosting:</strong> Vercel - Likely used for deployment based on the structure.</li>
+        <li><strong>Backend Hosting:</strong> Deployed using Railway.</li>
+      </ul>
+
       <h2>Backend</h2>
       <h3>API Endpoints</h3>
 
