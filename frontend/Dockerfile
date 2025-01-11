@@ -1,4 +1,5 @@
-FROM node:16
+# Use a lightweight Node.js image
+FROM node:16-alpine
 
 WORKDIR /usr/src/app
 
