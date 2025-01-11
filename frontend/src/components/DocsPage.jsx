@@ -45,7 +45,7 @@ const DocsPage = () => {
 
       <h3>Deployment</h3>
       <ul>
-        <li><strong>Frontend Hosting:</strong> Vercel - Likely used for deployment based on the structure.</li>
+        <li><strong>Frontend Hosting:</strong> Vercel.</li>
         <li><strong>Backend Hosting:</strong> Deployed using Railway.</li>
       </ul>
 
