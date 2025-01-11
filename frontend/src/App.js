@@ -4,6 +4,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import QuizForm from './components/QuizForm';
 import Results from './components/Results';
+import DocsPage from './components/DocsPage';
 import AuthContext from './AuthContext';
 
 // ProtectedRoute Component
@@ -22,8 +23,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} /> {/* Login page */}
+        <Route path="/" element={<DocsPage />} /> {/* Login page */}
+        <Route path="/login" element={<Login />} /> {/* Login page */}
         <Route path="/signup" element={<SignUp />} /> {/* Add Sign-Up Route */}
+        <Route path="/docs" element={<DocsPage />} />
         <Route
           path="/quiz"
           element={
