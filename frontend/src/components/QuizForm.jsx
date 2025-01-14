@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const QuizForm = () => {
   const { token, userId } = useContext(AuthContext);
   const [answers, setAnswers] = useState([]);
@@ -29,7 +31,7 @@ const QuizForm = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/quiz/submit',
+        `${API_URL}/api/quiz/submit`,
         { userId, answers },
         {
           headers: {
@@ -37,7 +39,7 @@ const QuizForm = () => {
           },
         }
       );
-
+            
       setMessage('Quiz submitted successfully!');
       navigate('/results');
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -13,12 +14,12 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${API_URL}/api/auth/register`, {
         name,
         email,
         password,
       });
-      setMessage(response.data.message);
+            setMessage(response.data.message);
       navigate('/'); // Redirect to login page after successful sign-up
     } catch (error) {
       setMessage(error.response?.data?.error || 'Sign-up failed.');

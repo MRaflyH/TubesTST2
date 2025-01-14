@@ -6,9 +6,15 @@ const quizRoutes = require('./routes/quizRoutes');
 
 const app = express();
 
+const corsOptions = {
+  origin: ['https://your-frontend.vercel.app', 'http://localhost:3000'], // Add allowed origins
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed HTTP methods
+  credentials: true, // Allow cookies and credentials
+};
+
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions)); // Apply CORS middleware
 
 // Routes
 app.use('/api/auth', authRoutes);

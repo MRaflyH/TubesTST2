@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Login = () => {
   const { login } = useContext(AuthContext); // Access login function
   const [email, setEmail] = useState('');
@@ -14,11 +16,11 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });
-
+      
       // Extract token and userId from response
       const { token, userId } = response.data;
 

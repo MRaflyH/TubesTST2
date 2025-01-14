@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Results = () => {
   const { token } = useContext(AuthContext);
   const [results, setResults] = useState(null);
@@ -14,7 +16,7 @@ const Results = () => {
           throw new Error('Token is missing. Please log in again.');
         }
 
-        const response = await axios.get('http://localhost:5000/api/quiz/results', {
+        const response = await axios.get(`${API_URL}/api/quiz/results`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
