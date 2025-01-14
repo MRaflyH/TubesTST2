@@ -7,7 +7,7 @@ const quizRoutes = require('./routes/quizRoutes');
 const app = express();
 
 const corsOptions = {
-  origin: ['https://your-frontend.vercel.app', 'http://localhost:3000'], // Add allowed origins
+  origin: ['https://bespoke-gift-frontend.vercel.app', 'http://localhost:3000'], // Add allowed origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed HTTP methods
   credentials: true, // Allow cookies and credentials
 };
