@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 dotenv.config();
+console.log('MongoDB URI:', process.env.MONGODB_URI);
 
 const app = express();
 
@@ -21,11 +22,14 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/quiz', quizRoutes); // All quiz-related routes
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGODB_URI)
+// MongoDB Connection with Debugging
+mongoose.set('debug', true); // Enable Mongoose debug mode for query debugging
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1); // Exit the process if the connection fails
+  });
 
 // Error Handling Middleware
 const errorHandler = (err, req, res, next) => {
@@ -34,6 +38,7 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
+// Log Incoming Requests
 app.use((req, res, next) => {
   console.log(`Incoming Request: ${req.method} ${req.path}`);
   next();
