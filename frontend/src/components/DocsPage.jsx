@@ -4,17 +4,17 @@ import React from 'react';
 const DocsPage = () => {
   return (
     <div style={{ padding: '20px' }}>
-      <h1>TubesTST2 Documentation</h1>
+      <h1>Bespoke Gift API Documentation</h1>
 
       <h2>Overview</h2>
-      <p>TubesTST2 is a web application that integrates a backend API and a React-based frontend to provide a quiz-based platform. This documentation outlines the backend API endpoints, middleware, and frontend components.</p>
+      <p>Bespoke Gift is a web application that provides personalized gift recommendations through a quiz-based system. This documentation outlines the backend API endpoints, authentication, and frontend components.</p>
 
       <h2>Technologies Used</h2>
 
       <h3>Backend</h3>
       <ul>
         <li><strong>Framework:</strong> <a href="https://expressjs.com/">Express.js</a> - A minimalist web framework for Node.js.</li>
-        <li><strong>Database:</strong> <a href="https://www.mongodb.com/">MongoDB</a> - A NoSQL database, used via the Mongoose ODM (Object Data Modeling).</li>
+        <li><strong>Database:</strong> <a href="https://www.mongodb.com/">MongoDB</a> - A NoSQL database, used via Mongoose ODM.</li>
         <li><strong>Authentication:</strong>
           <ul>
             <li><a href="https://www.npmjs.com/package/jsonwebtoken">jsonwebtoken</a> for token-based authentication.</li>
@@ -31,71 +31,63 @@ const DocsPage = () => {
 
       <h3>Frontend</h3>
       <ul>
-        <li><strong>Framework:</strong> <a href="https://reactjs.org/">React.js</a> - A JavaScript library for building user interfaces.</li>
-        <li><strong>Routing:</strong> <a href="https://reactrouter.com/">React Router</a> - For managing navigation and routing within the application.</li>
+        <li><strong>Framework:</strong> <a href="https://reactjs.org/">React.js</a> - A JavaScript library for building UI.</li>
+        <li><strong>Routing:</strong> <a href="https://reactrouter.com/">React Router</a> - For handling navigation.</li>
         <li><strong>HTTP Client:</strong> <a href="https://axios-http.com/">Axios</a> - For making API requests.</li>
-        <li><strong>Password Hashing:</strong> <a href="https://www.npmjs.com/package/bcryptjs">bcryptjs</a> for secure password handling.</li>
-        <li><strong>Development Tools:</strong>
-          <ul>
-            <li>`react-scripts` - Included for build, start, and testing setups.</li>
-            <li>ESLint - Configured for React-specific linting.</li>
-          </ul>
-        </li>
+        <li><strong>State Management:</strong> React Context API (used for authentication state).</li>
       </ul>
 
       <h3>Deployment</h3>
       <ul>
-        <li><strong>Frontend Hosting:</strong> Vercel.</li>
-        <li><strong>Backend Hosting:</strong> Deployed using Railway.</li>
+        <li><strong>Frontend Hosting:</strong> Vercel</li>
+        <li><strong>Backend Hosting:</strong> Railway</li>
       </ul>
 
-      <h2>Backend</h2>
-      <h3>API Endpoints</h3>
-
-      <h4>Product Routes</h4>
+      <h2>Backend API</h2>
+      <h3>Authentication Routes</h3>
       <ul>
-        <li><strong>GET `/`</strong>: Fetch all available products.</li>
-      </ul>
-
-      <h4>Authentication Routes</h4>
-      <ul>
-        <li><strong>POST `/register`</strong>: Registers a new user.
-          <pre><code>{`{
+        <li><strong>POST `/api/auth/register`</strong>: Registers a new user.</li>
+        <pre><code>{`{
   "name": "string",
   "email": "string",
   "password": "string"
 }`}</code></pre>
-        </li>
-        <li><strong>POST `/login`</strong>: Logs in an existing user.
-          <pre><code>{`{
+
+        <li><strong>POST `/api/auth/login`</strong>: Logs in an existing user and returns a JWT token.</li>
+        <pre><code>{`{
   "email": "string",
   "password": "string"
 }`}</code></pre>
-        </li>
       </ul>
 
-      <h4>Quiz Routes</h4>
+      <h3>Quiz Routes</h3>
       <ul>
-        <li><strong>POST `/`</strong>: Submits quiz data.
-          <pre><code>{`{
+        <li><strong>POST `/api/quiz/submit`</strong>: Submits quiz answers.</li>
+        <pre><code>{`{
   "userId": "string",
-  "answers": ["string"],
-  "result": "string"
+  "answers": ["string"]
 }`}</code></pre>
-        </li>
-        <li><strong>GET `/results`</strong>: Fetch quiz results (requires authentication).</li>
+
+        <li><strong>GET `/api/quiz/results`</strong>: Fetch the latest quiz results for the authenticated user.</li>
+        <pre><code>Headers:
+Authorization: Bearer your_token</code></pre>
+      </ul>
+
+      <h3>Product Routes</h3>
+      <ul>
+        <li><strong>GET `/api/products`</strong>: Fetches available products.</li>
       </ul>
 
       <h3>Middleware</h3>
-      <p><strong>Authentication Middleware:</strong> Verifies JWT tokens in requests to protect specific routes.</p>
+      <p><strong>Authentication Middleware:</strong> Protects routes by verifying JWT tokens.</p>
 
       <h2>Frontend</h2>
       <h3>Components</h3>
       <ul>
-        <li><strong>QuizForm.jsx:</strong> Displays quiz questions and handles quiz submissions.</li>
-        <li><strong>Results.jsx:</strong> Displays the results of submitted quizzes.</li>
+        <li><strong>QuizForm.jsx:</strong> Displays quiz questions and submits answers.</li>
+        <li><strong>Results.jsx:</strong> Displays quiz results and recommended products.</li>
         <li><strong>SignUp.jsx:</strong> Registration form for new users.</li>
-        <li><strong>Login.jsx:</strong> Login form for users.</li>
+        <li><strong>Login.jsx:</strong> User login form.</li>
       </ul>
 
       <h3>Context</h3>
@@ -107,8 +99,9 @@ const DocsPage = () => {
       <pre><code>npm run start</code></pre>
       <p><strong>Environment Variables:</strong></p>
       <ul>
-        <li><code>PORT</code>: Port number for the server.</li>
+        <li><code>PORT</code>: Server port.</li>
         <li><code>DB_URI</code>: MongoDB connection string.</li>
+        <li><code>JWT_SECRET</code>: Secret key for token authentication.</li>
       </ul>
 
       <h3>Frontend</h3>
@@ -119,17 +112,43 @@ const DocsPage = () => {
         <li><code>REACT_APP_API_URL</code>: Base URL of the backend API.</li>
       </ul>
 
-      <h2>Deployment</h2>
-      <ul>
-        <li><strong>Backend:</strong> Deployed using Railway.</li>
-        <li><strong>Frontend:</strong> Deployed using Vercel.</li>
-      </ul>
+      <h2>Testing API with cURL</h2>
+
+      <h3>Register a User</h3>
+      <pre><code>{`curl -X POST "https://bespoke-gift.up.railway.app/api/auth/register" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}'`}</code></pre>
+
+      <h3>Log in a User</h3>
+      <pre><code>{`curl -X POST "https://bespoke-gift.up.railway.app/api/auth/login" \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "john@example.com",
+  "password": "password123"
+}'`}</code></pre>
+
+      <h3>Submit Quiz Answers</h3>
+      <pre><code>{`curl -X POST "https://bespoke-gift.up.railway.app/api/quiz/submit" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <your_token>" \
+-d '{
+  "userId": "679b4ba7fec74f494432c9e0",
+  "answers": ["D", "B", "C", "D", "D"]
+}'`}</code></pre>
+
+      <h3>Get Quiz Results</h3>
+      <pre><code>{`curl -X GET "https://bespoke-gift.up.railway.app/api/quiz/results" \
+-H "Authorization: Bearer <your_token>"`}</code></pre>
 
       <h2>Future Improvements</h2>
       <ul>
-        <li>Expand quiz functionality with more question types.</li>
-        <li>Add admin dashboard for managing users and quizzes.</li>
-        <li>Improve UI/UX design for better user experience.</li>
+        <li>Expand quiz logic for more personalized recommendations.</li>
+        <li>Add user profile settings.</li>
+        <li>Improve UI/UX.</li>
       </ul>
     </div>
   );
